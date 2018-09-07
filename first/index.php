@@ -39,7 +39,7 @@ $(document).ready(function() {
 </head>
 	<body>
 	<div class="container">
-	<h2>Second Answer:</h2>
+	<h2>First Answer:</h2>
 	<form id="first_form" method="post" action="action.php">
 	  <div class="form-group" id="div-wordAndNumber">
 		<label for="wordAndNumber">Enter Numver of word And Length:</label>

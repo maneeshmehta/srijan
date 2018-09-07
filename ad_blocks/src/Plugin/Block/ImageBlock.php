@@ -67,7 +67,7 @@ class ImageBlock extends BlockBase {
     $desc = isset($config['desc']) ? $config['desc'] : '';
    
     return array(
-      '#markup' => $this->t('@org, @loc. Email id : @mail Phn: @phn. Address: @add', array('@add'=> $image,'@phn'=> $title,'@mail'=> $desc)),
+      '#markup' => $this->t('Image : @image Title: @title. Desc: @desc', array('@image'=> $image,'@title'=> $title,'@desc'=> $desc)),
     );
   }
 }

@@ -1,0 +1,7 @@
+ad_blocks:
+  version: 8.x-2017.4.0
+  css:
+    theme:
+      css/ad_blocks.css: {}
+  js:
+    js/googletagsetup.js: {}

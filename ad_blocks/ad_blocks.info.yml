@@ -1,0 +1,9 @@
+name: ad_blocks
+package: ONSET
+description: Using javascript and google tags servers Ads in blocks
+type: module
+version: 8.x-2017.4.0
+core: 8.x
+
+libraries:
+  - ad_blocks/ad_blocks

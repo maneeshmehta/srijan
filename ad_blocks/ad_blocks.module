@@ -1,0 +1,10 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+
+
+function ad_blocks_page_attachments_alter(array &$page) {
+  $page['#attached']['library'][] = 'ad_blocks/ad_blocks';
+
+}

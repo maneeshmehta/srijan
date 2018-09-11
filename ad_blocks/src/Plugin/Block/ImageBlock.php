@@ -36,10 +36,10 @@ class ImageBlock extends BlockBase {
         'file_validate_size' => array(25600000),
       ),
     );
-    $form['title'] = array(
+    $form['image_title'] = array(
       '#type' => 'textfield',
       '#title' => t('Title'),
-      '#default_value' => isset($config['title'])? $config['title'] : '',
+      '#default_value' => isset($config['image_title'])? $config['image_title'] : '',
     );
     $form['desc'] = array(
       '#type' => 'textfield',
@@ -54,7 +54,7 @@ class ImageBlock extends BlockBase {
   public function blockSubmit($form, FormStateInterface $form_state) {
     // Save our custom settings when the form is submitted.
     $this->setConfigurationValue('image', $form_state->getValue('image'));
-    $this->setConfigurationValue('title', $form_state->getValue('title'));
+    $this->setConfigurationValue('image_title', $form_state->getValue('image_title'));
     $this->setConfigurationValue('desc', $form_state->getValue('desc'));
   }
   /**
@@ -62,12 +62,41 @@ class ImageBlock extends BlockBase {
    */
   public function build() {
     $config = $this->getConfiguration();
+    $image1 = NULL;
     $image = isset($config['image']) ? $config['image'] : '';
-    $title = isset($config['title']) ? $config['title'] : '';
+    if(!empty($image)) {
+      $file = \Drupal\file\Entity\File::load(end($image));
+      $variables = [
+        'style_name' => 'thumbnail',
+        'uri' => $file->getFileUri(),
+      ];
+
+      // The image.factory service will check if our image is valid.
+      $image = \Drupal::service('image.factory')->get($file->getFileUri());
+      if ($image->isValid()) {
+        $variables['width'] = $image->getWidth();
+        $variables['height'] = $image->getHeight();
+      }
+      else {
+        $variables['width'] = $variables['height'] = NULL;
+      }
+
+      $logo_render_array = [
+        '#theme' => 'image_style',
+        '#width' => $variables['width'],
+        '#height' => $variables['height'],
+        '#style_name' => $variables['style_name'],
+        '#uri' => $variables['uri'],
+      ];
+      $image1 = \Drupal::service('renderer')->render($logo_render_array);
+    }
+    $title = isset($config['image_title']) ? $config['image_title'] : '';
     $desc = isset($config['desc']) ? $config['desc'] : '';
-   
-    return array(
-      '#markup' => $this->t('Image : @image Title: @title. Desc: @desc', array('@image'=> $image,'@title'=> $title,'@desc'=> $desc)),
-    );
+    return [
+      '#theme' =>'ad_blocks',
+      '#image' => $image1,
+      '#image_title' => $title,
+      '#desc' => $desc
+    ];
   }
 }

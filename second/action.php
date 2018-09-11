@@ -10,19 +10,18 @@ Class Action{
         $i = $row[3];
         $pos = null;
         if($c == 'Y'){
-            if($i==0){
-                    if(strpos($s1,$s2.' ') !== false)  
-                             $pos = strpos($s1,$s2.' ');
-            }
-            if($pos == null){
-                    if(strpos($s1,' '.$s2.' ',$i) !== false)  
-                             $pos = strpos($s1,' '.$s2.' ',$i);
-                    elseif(strrpos($s1,' '.$s2,$i) !== false)  
-                             $pos = strrpos($s1,' '.$s2,$i);
-        if($pos != (strlen($s1)-strlen($s2)-1))
-        $pos = null;
-            }
-        }elseif($c == 'N'){
+			echo $s1 = substr($s1,$i);
+            $arr = explode(' ',$s1);
+			$key = array_search($s2, $arr);
+			if($key !== null){ 
+				$pos = $key;
+				for($i=0;$i<$key;$i++){
+					$pos =$pos+strlen($arr[$i]);
+				}
+				
+			}
+			$pos = $pos+$i;
+        }elseif($c == 'N'){ 
             if(strpos($s1,$s2) !== false)  
                     $pos = strpos($s1,$s2,$i);
         }

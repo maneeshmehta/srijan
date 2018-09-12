@@ -4,22 +4,18 @@ Class Action{
 	public function countWord($word, $questions){
 		for($i=0;$i<count($questions);$i++){
                 // Find question in each word.
-		echo $this->findPosition($questions[$i], $word);
+		echo $this->replaceQuery($questions[$i], $word);
 		echo '</br>';
 				
 		}
 	}
-        private function findPosition($question, $words){
-            self::replaceQuery($question, $words);
-        }
-        
         // Find the ? and its position and remove it from question and remove character from each word from same position. 
-	static function replaceQuery(&$question, &$words){ 
+	private function replaceQuery($question, $words){ 
                 $pos = strpos($question, '?');
                 if($pos === 0 || $pos >0){
                     $question = substr_replace($question,"",$pos,1);
-                    $words = self::removeElementFromPosition($words, $pos);
-                    self::replaceQuery($question, $words); 
+                    $words = $this->removeElementFromPosition($words, $pos);
+                    $this->replaceQuery($question, $words); 
                 }else{
                     $count = 0;
                     for($i=0;$i<count($words);$i++){  

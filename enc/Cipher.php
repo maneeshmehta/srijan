@@ -3,20 +3,33 @@ namespace enc;
 
 include 'Enc.php';
 Class Cipher implements Enc {
+    
+    private static $Key= "dsfdshfvsdasawq2";
+    private static $Algo = MCRYPT_BLOWFISH;
+    
+    public function encrypt($input) {
+        if(!$input)
+            return false;
 
-public static function encrypt($input) {
-    if(!$input)
-        return false;
-   // perform OpenSSL or mcrypt algo here.
-    return trim(base64_encode($input));
-}
+        $iv_size = mcrypt_get_iv_size(self::$Algo, MCRYPT_MODE_ECB);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
 
-public static function decrypt($input) {
-    if(!$input)
-        return false;
-    // perform OpenSSL or mcrypt algo here.
-    return base64_decode($input);
-}
+        $crypt = mcrypt_encrypt(self::$Algo, self::$Key, $input, MCRYPT_MODE_ECB, $iv);
+        return trim(base64_encode($crypt));
+    }
+
+    public function decrypt($input) {
+        if(!$input)
+            return false;
+		
+        $crypt = base64_decode($input);
+
+        $iv_size = mcrypt_get_iv_size(self::$Algo, MCRYPT_MODE_ECB);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+
+        $decrypt = mcrypt_decrypt(self::$Algo, self::$Key, $crypt, MCRYPT_MODE_ECB, $iv);
+        return trim($decrypt);
+    }
 
 }
 

@@ -2,8 +2,8 @@
 namespace enc;
 
 interface Enc{
-    public function encrypt($input);
+    public static function encrypt($input);
     
-    public function decrypt($input);
+    public static function decrypt($input);
 }
 ?>

@@ -7,7 +7,7 @@ Class Cipher implements Enc {
     private static $Key= "dsfdshfvsdasawq2";
     private static $Algo = MCRYPT_BLOWFISH;
     
-    public function encrypt($input) {
+    public static function encrypt($input) {
         if(!$input)
             return false;
 
@@ -18,7 +18,7 @@ Class Cipher implements Enc {
         return trim(base64_encode($crypt));
     }
 
-    public function decrypt($input) {
+    public static function decrypt($input) {
         if(!$input)
             return false;
 		
